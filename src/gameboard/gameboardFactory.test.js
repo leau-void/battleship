@@ -13,7 +13,7 @@ test('no fit column', () => {
     row: 1,
     column: 'i',
   });
-  expect(testBoard.ships).toEqual([]);
+  expect(testBoard.ships[0]).toBeUndefined();
 });
 
 test('no fit row', () => {
@@ -22,7 +22,7 @@ test('no fit row', () => {
     row: 9,
     column: 'a',
   });
-  expect(testBoard.ships).toEqual([]);
+  expect(testBoard.ships[0]).toBeUndefined();
 });
 
 test('placeShip horiz', () => {
@@ -57,4 +57,26 @@ test('placeShip vert', () => {
   };
 
   expect(testBoard.ships[1]).toMatchObject(desiredObj);
+});
+
+test('overlap last ship', () => {
+  const ship = wrapShip.battleship({ isHorizontal: false });
+  testBoard.placeShip({
+    ship,
+    row: 3,
+    column: 'd',
+  });
+
+  expect(testBoard.ships[2]).toBeUndefined();
+});
+
+test('smaller overlap', () => {
+  const ship = wrapShip.battleship({ isHorizontal: false });
+  testBoard.placeShip({
+    ship,
+    row: 1,
+    column: 'd',
+  });
+
+  expect(testBoard.ships[2]).toBeUndefined();
 });

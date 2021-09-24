@@ -3,19 +3,13 @@ export default () => {
   const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
   const ships = [];
 
-  const checkFits = (array, startIndex, length) => startIndex + length <= array.length - 1;
-
-  const findStartIndex = (array, value) => array.findIndex((curr) => curr === value);
-
-  const getTargetArray = (ship) => (ship.isHorizontal ? columns : rows);
-
   const getRelPositions = ({ length, targetArray, start }) => {
-    const startIndex = findStartIndex(targetArray, start);
+    const startIndex = targetArray.findIndex((curr) => curr === start);
     return [...targetArray].splice(startIndex, length);
   };
 
   const getTargetArrayAndStart = ({ ship, row, column }) => {
-    const targetArray = getTargetArray(ship);
+    const targetArray = ship.isHorizontal ? columns : rows;
     const start = targetArray === rows ? row : column;
     return { targetArray, start };
   };
@@ -28,16 +22,20 @@ export default () => {
     });
   };
 
-  const checkPlace = function ({ ship, row, column, pos }) {
+  const checkOverlap = function checkOverlapWithEveryShip(pos) {
+    return pos.every((position) => ships.every((ship) => !ship.pos.includes(position)));
+  };
+
+  const checkPlace = function checkCanPlaceThere({ ship, row, column, pos }) {
     const posArray = pos || getAbsPositions({ ship, row, column });
-    if (posArray.length === ship.length) return true;
+    if (posArray.length !== ship.length) return false;
+    return checkOverlap(posArray);
   };
 
   const placeShip = function placeShipBoard({ ship, row, column }) {
     const pos = getAbsPositions({ ship, row, column });
     const canPlace = checkPlace({ ship, row, column, pos });
     if (!canPlace) return;
-    //  checkFits(targetArray, findStartIndex(targetArray, start), ship.length)
 
     ships.push({ ship, row, column, pos });
   };
