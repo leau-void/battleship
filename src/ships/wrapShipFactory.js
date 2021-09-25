@@ -1,4 +1,4 @@
-import shipFactory from './factory/shipFactory';
+import shipFactory from './shipFactory';
 
 const wrapShip = {};
 
