@@ -11,11 +11,11 @@ export default ({ isHorizontal, name }) => {
   const hits = [];
   const hit = function addHit(pos) {
     if (pos >= length || pos < 0) return;
-    this.hits.push(pos);
+    hits.push(pos);
   };
   const isSunk = function checkIfSunk() {
-    return this.hits.length === this.length;
+    return hits.length === this.length;
   };
 
-  return { length, isHorizontal, name, hits, isSunk, hit };
+  return { length, isHorizontal, name, isSunk, hit };
 };

@@ -2,6 +2,10 @@ export default () => {
   const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
   const ships = [];
+  const hits = [];
+  const misses = [];
+
+  const getShips = () => [...ships];
 
   const getRelPositions = ({ length, targetArray, start }) => {
     const startIndex = targetArray.findIndex((curr) => curr === start);
@@ -39,5 +43,16 @@ export default () => {
 
     ships.push({ ship, row, column, pos });
   };
-  return { rows, columns, ships, placeShip };
+
+  const receiveAttack = function receiveAttack(coords) {
+    const target = ships.find((shipObj) => shipObj.pos.includes(coords));
+    if (target) {
+      target.ship.hit(target.pos.findIndex((curr) => curr === coords));
+      hits.push(coords);
+    } else misses.push(coords);
+  };
+
+  const isAllSunk = () => ships.every((shipObj) => shipObj.ship.isSunk());
+
+  return { getShips, placeShip, checkPlace, receiveAttack, isAllSunk, hits, misses };
 };

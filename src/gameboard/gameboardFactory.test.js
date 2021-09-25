@@ -1,19 +1,16 @@
 import gameboardFactory from './gameboardFactory';
 import wrapShip from '../ships/wrapShipFactory';
-/* global test expect beforeEach */
+/* global test expect jest */
 
 const testBoard = gameboardFactory();
 
 test('no fit column', () => {
-  expect(testBoard.rows).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-  expect(testBoard.columns).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']);
-
   testBoard.placeShip({
     ship: wrapShip.cruiser({ isHorizontal: true }),
     row: 1,
     column: 'i',
   });
-  expect(testBoard.ships[0]).toBeUndefined();
+  expect(testBoard.getShips()[0]).toBeUndefined();
 });
 
 test('no fit row', () => {
@@ -22,7 +19,7 @@ test('no fit row', () => {
     row: 9,
     column: 'a',
   });
-  expect(testBoard.ships[0]).toBeUndefined();
+  expect(testBoard.getShips()[0]).toBeUndefined();
 });
 
 test('placeShip horiz', () => {
@@ -39,7 +36,7 @@ test('placeShip horiz', () => {
     pos: ['a1', 'b1', 'c1'],
   };
 
-  expect(testBoard.ships[0]).toMatchObject(desiredObj);
+  expect(testBoard.getShips()[0]).toMatchObject(desiredObj);
 });
 
 test('placeShip vert', () => {
@@ -56,7 +53,7 @@ test('placeShip vert', () => {
     pos: ['d3', 'd4', 'd5', 'd6'],
   };
 
-  expect(testBoard.ships[1]).toMatchObject(desiredObj);
+  expect(testBoard.getShips()[1]).toMatchObject(desiredObj);
 });
 
 test('overlap last ship', () => {
@@ -67,7 +64,7 @@ test('overlap last ship', () => {
     column: 'd',
   });
 
-  expect(testBoard.ships[2]).toBeUndefined();
+  expect(testBoard.getShips()[2]).toBeUndefined();
 });
 
 test('smaller overlap', () => {
@@ -78,5 +75,50 @@ test('smaller overlap', () => {
     column: 'd',
   });
 
-  expect(testBoard.ships[2]).toBeUndefined();
+  expect(testBoard.getShips()[2]).toBeUndefined();
+});
+
+const mockHit = jest.fn();
+const mockHit2 = jest.fn();
+
+test('attack hit', () => {
+  testBoard.placeShip({
+    ship: wrapShip.destroyer({ isHorizontal: true }),
+    row: 8,
+    column: 'h',
+  });
+  testBoard.getShips()[testBoard.getShips().length - 1].ship.hit = mockHit;
+  testBoard.receiveAttack('h8');
+  expect(testBoard.hits[0]).toEqual('h8');
+  expect(testBoard.misses).toEqual([]);
+
+  expect(mockHit).toHaveBeenCalledWith(0);
+});
+
+test('attack miss', () => {
+  testBoard.getShips()[testBoard.getShips().length - 1].ship.hit = mockHit2;
+  testBoard.receiveAttack('h9');
+  expect(testBoard.hits[0]).toEqual('h8');
+  expect(testBoard.misses[0]).toEqual('h9');
+
+  expect(mockHit2.mock.calls.length).toBe(0);
+
+  // make the mocked boat not falsify allSunk test
+  const mockSunk = jest.fn(() => true);
+  testBoard.getShips()[testBoard.getShips().length - 1].ship.isSunk = mockSunk;
+});
+
+test('not all sunk', () => {
+  expect(testBoard.isAllSunk()).toBe(false);
+});
+
+test('all sunk', () => {
+  const allPos = testBoard.getShips().reduce((arr, shipObj) => {
+    const newArr = [...arr, ...shipObj.pos];
+    return newArr;
+  }, []);
+  allPos.forEach((shipPos) => {
+    testBoard.receiveAttack(shipPos);
+  });
+  expect(testBoard.isAllSunk()).toBe(true);
 });
