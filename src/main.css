@@ -1,0 +1,8 @@
+@import './styles/normalize.css';
+
+.main {
+  display: flex;
+  flex-direction: row;
+  gap: 5vw;
+  padding: 2vw;
+}

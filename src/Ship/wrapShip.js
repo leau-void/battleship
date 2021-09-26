@@ -1,4 +1,5 @@
 import Ship from './Ship';
+import './Ship.css';
 
 const wrapShip = {};
 

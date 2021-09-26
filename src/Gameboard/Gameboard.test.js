@@ -89,8 +89,8 @@ test('attack hit', () => {
   });
   testBoard.getShips()[testBoard.getShips().length - 1].ship.hit = mockHit;
   testBoard.receiveAttack('h8');
-  expect(testBoard.hits[0]).toEqual('h8');
-  expect(testBoard.misses).toEqual([]);
+  expect(testBoard.getHits()[0]).toEqual('h8');
+  expect(testBoard.getMisses()).toEqual([]);
 
   expect(mockHit).toHaveBeenCalledWith(0);
 });
@@ -98,8 +98,8 @@ test('attack hit', () => {
 test('attack miss', () => {
   testBoard.getShips()[testBoard.getShips().length - 1].ship.hit = mockHit2;
   testBoard.receiveAttack('h9');
-  expect(testBoard.hits[0]).toEqual('h8');
-  expect(testBoard.misses[0]).toEqual('h9');
+  expect(testBoard.getHits()[0]).toEqual('h8');
+  expect(testBoard.getMisses()[0]).toEqual('h9');
 
   expect(mockHit2.mock.calls.length).toBe(0);
 

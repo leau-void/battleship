@@ -7,12 +7,14 @@ const testBoard2 = Gameboard();
 
 const playerTest1 = Player({
   name: 'Human',
+  isHuman: true,
   starts: true,
   self: testBoard1,
   enemy: testBoard2,
 });
 const playerTest2 = Player({
   name: 'The Computer',
+  isHuman: false,
   starts: false,
   self: testBoard2,
   enemy: testBoard1,

@@ -13,7 +13,6 @@ export default function buildElementsTree(obj) {
         break;
       case 'attributes':
         Object.keys(obj[prop]).forEach((attr) => element.setAttribute(attr, obj[prop][attr]));
-
         //  obj.attributes.forEach((attribute) => element.setAttribute(attribute[0], attribute[1]));
         break;
       case 'children':

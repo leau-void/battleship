@@ -1,0 +1,44 @@
+.board {
+  width: 40vw;
+  height: 40vw;
+  border: 2px solid black;
+  display: grid;
+  grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+}
+
+.board__cell {
+  border: 1px solid black;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.board__shot {
+  opacity: 1;
+  font-size: 21px;
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top: 0;
+}
+
+.board__shot::after {
+  position: absolute;
+  display: block;
+  content: '';
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.board_hit::after {
+  background: red;
+}
+
+.board_miss::after {
+  background: blue;
+}

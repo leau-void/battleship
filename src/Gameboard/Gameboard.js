@@ -1,3 +1,5 @@
+import './Gameboard.css';
+
 export default () => {
   const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
@@ -5,7 +7,11 @@ export default () => {
   const hits = [];
   const misses = [];
 
+  const getRows = () => [...rows];
+  const getColumns = () => [...columns];
   const getShips = () => [...ships];
+  const getHits = () => [...hits];
+  const getMisses = () => [...misses];
 
   const getRelPositions = ({ length, targetArray, start }) => {
     const startIndex = targetArray.findIndex((curr) => curr === start);
@@ -54,5 +60,15 @@ export default () => {
 
   const isAllSunk = () => ships.every((shipObj) => shipObj.ship.isSunk());
 
-  return { getShips, placeShip, checkPlace, receiveAttack, isAllSunk, hits, misses };
+  return {
+    getRows,
+    getColumns,
+    getShips,
+    placeShip,
+    checkPlace,
+    receiveAttack,
+    isAllSunk,
+    getHits,
+    getMisses,
+  };
 };
