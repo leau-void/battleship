@@ -1,8 +1,8 @@
-import gameboardFactory from './gameboardFactory';
-import wrapShip from '../ships/wrapShipFactory';
+import Gameboard from './Gameboard';
+import wrapShip from '../Ship/wrapShip';
 /* global test expect jest */
 
-const testBoard = gameboardFactory();
+const testBoard = Gameboard();
 
 test('no fit column', () => {
   testBoard.placeShip({

@@ -1,33 +1,33 @@
-import shipFactory from './shipFactory';
+import Ship from './Ship';
 
 const wrapShip = {};
 
 wrapShip.carrier = ({ isHorizontal }) =>
-  shipFactory({
+  Ship({
     isHorizontal,
     name: 'Carrier',
   });
 
 wrapShip.battleship = ({ isHorizontal }) =>
-  shipFactory({
+  Ship({
     isHorizontal,
     name: 'Battleship',
   });
 
 wrapShip.cruiser = ({ isHorizontal }) =>
-  shipFactory({
+  Ship({
     isHorizontal,
     name: 'Cruiser',
   });
 
 wrapShip.submarine = ({ isHorizontal }) =>
-  shipFactory({
+  Ship({
     isHorizontal,
     name: 'Submarine',
   });
 
 wrapShip.destroyer = ({ isHorizontal }) =>
-  shipFactory({
+  Ship({
     isHorizontal,
     name: 'Destroyer',
   });

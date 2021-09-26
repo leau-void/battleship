@@ -1,4 +1,4 @@
-import wrapShip from './wrapShipFactory';
+import wrapShip from './wrapShip';
 /* global test expect */
 
 test('carrier', () => {

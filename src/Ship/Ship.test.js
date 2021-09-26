@@ -1,7 +1,7 @@
-import shipFactory from './shipFactory';
+import Ship from './Ship';
 /* global test expect */
 
-const testShip = shipFactory({
+const testShip = Ship({
   length: 2,
   isHorizontal: true,
   name: 'Destroyer',

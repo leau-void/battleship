@@ -1,17 +1,17 @@
-import playerFactory from './playerFactory';
-import gameboardFactory from '../gameboard/gameboardFactory';
+import Player from './Player';
+import Gameboard from '../Gameboard/Gameboard';
 /* global test expect jest */
 
-const testBoard1 = gameboardFactory();
-const testBoard2 = gameboardFactory();
+const testBoard1 = Gameboard();
+const testBoard2 = Gameboard();
 
-const playerTest1 = playerFactory({
+const playerTest1 = Player({
   name: 'Human',
   starts: true,
   self: testBoard1,
   enemy: testBoard2,
 });
-const playerTest2 = playerFactory({
+const playerTest2 = Player({
   name: 'The Computer',
   starts: false,
   self: testBoard2,
