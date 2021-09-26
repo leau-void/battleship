@@ -47,6 +47,11 @@ export default ({ players }) => {
   const displayShots = ({ player, cacheDOM }) => {
     const hits = player.getSelf().getHits();
     const misses = player.getSelf().getMisses();
+    const elemObj = {
+      tag: 'div',
+      classes: ['board__target'],
+      text: '\u25CE',
+    };
     console.log(hits);
     console.log(misses);
 
@@ -54,7 +59,7 @@ export default ({ players }) => {
       const elem = buildElementsTree({
         tag: 'div',
         classes: ['board__shot', 'board_hit'],
-        text: '\u25CE',
+        children: [elemObj],
       });
       const target = cacheDOM.querySelector(`[data-coords=${hit}]`);
       target.appendChild(elem);
@@ -64,7 +69,7 @@ export default ({ players }) => {
       const elem = buildElementsTree({
         tag: 'div',
         classes: ['board__shot', 'board_miss'],
-        text: '\u25CE',
+        children: [elemObj],
       });
       const target = cacheDOM.querySelector(`[data-coords=${miss}]`);
       target.appendChild(elem);
@@ -72,6 +77,12 @@ export default ({ players }) => {
   };
 
   const updateDisplay = () => {
+    boardPlayer1.replaceChildren();
+    boardPlayer2.replaceChildren();
+
+    populateBoard(player1Cache);
+    populateBoard(player2Cache);
+
     displayShips(player1Cache);
     displayShots(player1Cache);
 
@@ -79,9 +90,29 @@ export default ({ players }) => {
     displayShots(player2Cache);
   };
 
+  const handleAttack = (event) => {
+    const { player } = player1Cache;
+    const target = event.target.closest('[data-coords]');
+    if (!player.isTurn || !target) return;
+    const attackValid = player.attack(target.dataset.coords);
+
+    if (attackValid) {
+      updateDisplay();
+
+      player.switchTurn();
+      player2Cache.player.switchTurn();
+
+      updateDisplay();
+
+      player.switchTurn();
+      player2Cache.player.switchTurn();
+    }
+  };
+
   const setupBoards = () => {
-    populateBoard(player1Cache);
-    populateBoard(player2Cache);
+    updateDisplay();
+
+    player2Cache.cacheDOM.addEventListener('click', (e) => handleAttack(e));
   };
 
   return { setupBoards, updateDisplay };

@@ -9,6 +9,7 @@ const boardPlayer2 = Gameboard();
 
 const player = Player({
   name: 'Human',
+  isHuman: true,
   starts: true,
   self: boardPlayer1,
   enemy: boardPlayer2,
@@ -16,6 +17,7 @@ const player = Player({
 
 const cpu = Player({
   name: 'The Computer',
+  isHuman: false,
   starts: false,
   self: boardPlayer2,
   enemy: boardPlayer1,
