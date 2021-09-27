@@ -1,7 +1,8 @@
 .ship {
-  width: 100%;
-  height: 100%;
   --length: 300%;
+  width: var(--length);
+  min-width: 100%;
+  height: 100%;
   position: relative;
   z-index: 99;
   box-sizing: border-box;
@@ -22,12 +23,12 @@
 
 .ship_is-horizontal_true {
   background: rebeccapurple;
-  width: var(--length);
 }
 
 .ship_is-horizontal_false {
   background: blueviolet;
-  height: var(--length);
+  transform: translateY(-100%) rotate(90deg);
+  transform-origin: bottom left;
 }
 
 .ship_length_5 {
