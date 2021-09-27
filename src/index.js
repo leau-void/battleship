@@ -39,8 +39,6 @@ const displayController = DisplayController({
   },
 });
 
-displayController.setupBoards();
-
 boardPlayer1.placeShip({
   ship: wrapShip.carrier({ isHorizontal: true }),
   row: 1,
@@ -82,3 +80,21 @@ player.attack('b8');
 player.attack('d2');
 
 displayController.updateDisplay();
+
+domPlayer2.addEventListener('click', (e) => {
+  const target = e.target.closest('[data-coords]');
+  if (!player.isTurn || !target) return;
+  const attackValid = player.attack(target.dataset.coords);
+
+  if (attackValid) {
+    displayController.updateDisplay();
+
+    player.switchTurn();
+    cpu.switchTurn();
+
+    displayController.updateDisplay();
+
+    player.switchTurn();
+    cpu.switchTurn();
+  }
+});

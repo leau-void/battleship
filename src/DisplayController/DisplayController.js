@@ -4,12 +4,12 @@ export default ({ player1, player2 }) => {
   const populateBoard = ({ board, cacheDOM }) => {
     board.getRows().forEach((row) => {
       board.getColumns().forEach((column) => {
-        const elem = buildElementsTree({
+        const elem = {
           tag: 'div',
           classes: ['board__cell'],
           attributes: { 'data-coords': `${column}${row}` },
-        });
-        cacheDOM.appendChild(elem);
+        };
+        cacheDOM.appendChild(buildElementsTree(elem));
       });
     });
   };
@@ -17,16 +17,17 @@ export default ({ player1, player2 }) => {
   const displayShips = ({ board, cacheDOM }) => {
     const ships = board.getShips();
     ships.forEach((shipObj) => {
-      const elem = buildElementsTree({
+      const elem = {
         tag: 'div',
         classes: [
           'ship',
           `ship_is-horizontal_${shipObj.ship.isHorizontal}`,
           `ship_length_${shipObj.ship.length}`,
         ],
-      });
+      };
+      if (shipObj.ship.isSunk()) elem.classes.push('ship_sunk');
       const target = cacheDOM.querySelector(`[data-coords=${shipObj.pos[0]}]`);
-      target.appendChild(elem);
+      target.appendChild(buildElementsTree(elem));
     });
   };
 
@@ -40,23 +41,23 @@ export default ({ player1, player2 }) => {
     };
 
     hits.forEach((hit) => {
-      const elem = buildElementsTree({
+      const elem = {
         tag: 'div',
         classes: ['board__shot', 'board_hit'],
         children: [elemObj],
-      });
+      };
       const target = cacheDOM.querySelector(`[data-coords=${hit}]`);
-      target.appendChild(elem);
+      target.appendChild(buildElementsTree(elem));
     });
 
     misses.forEach((miss) => {
-      const elem = buildElementsTree({
+      const elem = {
         tag: 'div',
         classes: ['board__shot', 'board_miss'],
         children: [elemObj],
-      });
+      };
       const target = cacheDOM.querySelector(`[data-coords=${miss}]`);
-      target.appendChild(elem);
+      target.appendChild(buildElementsTree(elem));
     });
   };
 
@@ -69,30 +70,5 @@ export default ({ player1, player2 }) => {
     });
   };
 
-  const handleAttack = (event) => {
-    const { player } = player1;
-    const target = event.target.closest('[data-coords]');
-    if (!player.isTurn || !target) return;
-    const attackValid = player.attack(target.dataset.coords);
-
-    if (attackValid) {
-      updateDisplay();
-
-      player.switchTurn();
-      player2.player.switchTurn();
-
-      updateDisplay();
-
-      player.switchTurn();
-      player2.player.switchTurn();
-    }
-  };
-
-  const setupBoards = () => {
-    updateDisplay();
-
-    player2.cacheDOM.addEventListener('click', (e) => handleAttack(e));
-  };
-
-  return { setupBoards, updateDisplay };
+  return { updateDisplay };
 };
