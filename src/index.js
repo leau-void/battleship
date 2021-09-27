@@ -4,6 +4,9 @@ import Player from './Player/Player';
 import DisplayController from './DisplayController/DisplayController';
 import './main.css';
 
+const domPlayer1 = document.querySelector('.board_player1');
+const domPlayer2 = document.querySelector('.board_player2');
+
 const boardPlayer1 = Gameboard();
 const boardPlayer2 = Gameboard();
 
@@ -24,9 +27,15 @@ const cpu = Player({
 });
 
 const displayController = DisplayController({
-  players: {
-    player1: player,
-    player2: cpu,
+  player1: {
+    player,
+    board: boardPlayer1,
+    cacheDOM: domPlayer1,
+  },
+  player2: {
+    player: cpu,
+    board: boardPlayer2,
+    cacheDOM: domPlayer2,
   },
 });
 
