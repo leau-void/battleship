@@ -1,9 +1,8 @@
 export default ({ name, starts, isHuman, self, enemy }) => {
   const getName = () => name;
-  const doesStart = () => starts;
   const getSelf = () => self;
   const getEnemy = () => enemy;
-  let isTurn = starts;
+  const isTurn = starts;
 
   const posNotUsed = (pos) =>
     [...enemy.getHits(), ...enemy.getMisses()].every((curr) => curr !== pos);

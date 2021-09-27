@@ -14,19 +14,16 @@ export default ({ player1, player2 }) => {
     });
   };
 
-  const displayShips = ({ board, cacheDOM }) => {
-    const ships = board.getShips();
-    ships.forEach((shipObj) => {
+  const displayShips = ({ board, cacheDOM, shipsArray }) => {
+    const ships = shipsArray || board.getShips();
+    ships.forEach(({ ship, pos }, index) => {
       const elem = {
         tag: 'div',
-        classes: [
-          'ship',
-          `ship_is-horizontal_${shipObj.ship.isHorizontal}`,
-          `ship_length_${shipObj.ship.length}`,
-        ],
+        classes: ['ship', `ship_is-horizontal_${ship.isHorizontal}`, `ship_length_${ship.length}`],
       };
-      if (shipObj.ship.isSunk()) elem.classes.push('ship_sunk');
-      const target = cacheDOM.querySelector(`[data-coords=${shipObj.pos[0]}]`);
+      if (shipsArray) elem.attributes = { draggable: 'true', 'data-index': index };
+      if (ship.isSunk()) elem.classes.push('ship_sunk');
+      const target = cacheDOM.querySelector(`[data-coords=${pos[0]}]`);
       target.appendChild(buildElementsTree(elem));
     });
   };
@@ -70,5 +67,5 @@ export default ({ player1, player2 }) => {
     });
   };
 
-  return { updateDisplay };
+  return { updateDisplay, displayShips };
 };

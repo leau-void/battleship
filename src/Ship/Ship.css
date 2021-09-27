@@ -1,12 +1,24 @@
 .ship {
-  --length: 300%;
-  width: var(--length);
+  --length: 200%;
+  width: 100%;
   min-width: 100%;
   height: 100%;
   position: relative;
   z-index: 99;
   box-sizing: border-box;
   opacity: 0.5;
+}
+
+.ship-port .ship::before {
+  min-width: 3.7vw;
+  min-height: 3.7vw;
+  max-width: 3.7vw;
+  max-height: 3.7vw;
+  font-size: 3.7vw;
+  text-align: center;
+  content: '✥';
+  display: block;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .board_player2 .ship {
@@ -23,12 +35,16 @@
 
 .ship_is-horizontal_true {
   background: rebeccapurple;
+  width: var(--length);
 }
 
 .ship_is-horizontal_false {
   background: blueviolet;
+  height: var(--length);
+  /*
   transform: translateY(-100%) rotate(90deg);
   transform-origin: bottom left;
+  */
 }
 
 .ship_length_5 {

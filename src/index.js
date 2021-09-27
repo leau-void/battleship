@@ -1,4 +1,4 @@
-import wrapShip from './Ship/wrapShip';
+import wrapCreateShips from './Ship/wrapCreateShips';
 import Gameboard from './Gameboard/Gameboard';
 import Player from './Player/Player';
 import DisplayController from './DisplayController/DisplayController';
@@ -59,36 +59,29 @@ const handleEnd = (winner) => {
   winner.player.switchTurn();
 };
 
-boardPlayer1.placeShip({
-  ship: wrapShip.carrier({ isHorizontal: true }),
-  row: 1,
-  column: 'b',
+const dragstartHandler = (e) => {
+  e.dataTransfer.setData('text/plain', e.target.dataset.index);
+};
+
+const shipsPlayer1 = {
+  shipsArray: wrapCreateShips().map((ship, index) => ({ ship, pos: [`p${index}`] })),
+  cacheDOM: document.querySelector('.ship-port'),
+};
+
+displayController.displayShips(shipsPlayer1);
+domPlayer1.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
 });
-boardPlayer1.placeShip({
-  ship: wrapShip.battleship({ isHorizontal: true }),
-  row: 3,
-  column: 'd',
-});
-boardPlayer1.placeShip({
-  ship: wrapShip.cruiser({ isHorizontal: true }),
-  row: 7,
-  column: 'f',
+domPlayer1.addEventListener('drop', (e) => {
+  e.preventDefault();
+  const data = e.dataTransfer.getData('text/plain');
+  console.log(e.target);
 });
 
-boardPlayer2.placeShip({
-  ship: wrapShip.carrier({ isHorizontal: false }),
-  row: 1,
-  column: 'a',
-});
-boardPlayer2.placeShip({
-  ship: wrapShip.battleship({ isHorizontal: false }),
-  row: 3,
-  column: 'b',
-});
-boardPlayer2.placeShip({
-  ship: wrapShip.destroyer({ isHorizontal: false }),
-  row: 5,
-  column: 'd',
+const shipsDiv = document.querySelectorAll('[data-index]');
+shipsDiv.forEach((div) => {
+  div.addEventListener('dragstart', dragstartHandler);
 });
 
 player.attack('a1');
