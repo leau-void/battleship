@@ -19,15 +19,13 @@ export default ({ name, starts, isHuman, self, enemy }) => {
   const attack = (pos) => {
     if (pos && posNotUsed(pos)) enemy.receiveAttack(pos);
     else if (!isHuman) enemy.receiveAttack(randomAttack());
-    else return false;
-    return true;
   };
 
   const switchTurn = function swapTurns() {
-    isTurn = !isTurn;
+    this.isTurn = !this.isTurn;
 
-    if (isTurn && !isHuman) attack();
+    if (this.isTurn && !isHuman) attack();
   };
 
-  return { getName, doesStart, isTurn, switchTurn, getSelf, getEnemy, attack };
+  return { getName, isTurn, switchTurn, getSelf, getEnemy, attack };
 };

@@ -55,7 +55,3 @@
 .board_miss::after {
   background: blue;
 }
-
-.board_player2 .ship {
-  display: none;
-}

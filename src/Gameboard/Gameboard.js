@@ -56,6 +56,7 @@ export default () => {
       target.ship.hit(target.pos.findIndex((curr) => curr === coords));
       hits.push(coords);
     } else misses.push(coords);
+    document.dispatchEvent(new Event('receivedAttack'));
   };
 
   const isAllSunk = () => ships.every((shipObj) => shipObj.ship.isSunk());

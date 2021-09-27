@@ -5,9 +5,19 @@
   position: relative;
   z-index: 99;
   box-sizing: border-box;
+  opacity: 0.5;
+}
+
+.board_player2 .ship {
+  display: none;
+}
+
+.board_player2 .ship.ship_sunk {
+  display: block;
 }
 
 .ship_sunk {
+  opacity: 0.8;
 }
 
 .ship_is-horizontal_true {

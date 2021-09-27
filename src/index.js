@@ -26,7 +26,7 @@ const cpu = Player({
   enemy: boardPlayer1,
 });
 
-const displayController = DisplayController({
+const refObj = {
   player1: {
     player,
     board: boardPlayer1,
@@ -37,7 +37,27 @@ const displayController = DisplayController({
     board: boardPlayer2,
     cacheDOM: domPlayer2,
   },
-});
+};
+
+const displayController = DisplayController(refObj);
+
+const handleAttack = (e) => {
+  const target = e.target.closest('[data-coords]');
+  if (player.isTurn && target) player.attack(target.dataset.coords);
+};
+
+const checkEnd = ({ player1, player2 }) => {
+  const players = [player1, player2];
+  const loser = players.find(({ board }) => board.isAllSunk());
+
+  if (loser) return players.find((curr) => curr !== loser);
+  return false;
+};
+
+const handleEnd = (winner) => {
+  console.log(winner);
+  winner.player.switchTurn();
+};
 
 boardPlayer1.placeShip({
   ship: wrapShip.carrier({ isHorizontal: true }),
@@ -81,20 +101,14 @@ player.attack('d2');
 
 displayController.updateDisplay();
 
-domPlayer2.addEventListener('click', (e) => {
-  const target = e.target.closest('[data-coords]');
-  if (!player.isTurn || !target) return;
-  const attackValid = player.attack(target.dataset.coords);
+document.addEventListener('receivedAttack', () => {
+  displayController.updateDisplay();
 
-  if (attackValid) {
-    displayController.updateDisplay();
-
+  const winner = checkEnd(refObj);
+  if (!winner) {
     player.switchTurn();
     cpu.switchTurn();
-
-    displayController.updateDisplay();
-
-    player.switchTurn();
-    cpu.switchTurn();
-  }
+  } else handleEnd(winner);
 });
+
+domPlayer2.addEventListener('click', (e) => handleAttack(e));
