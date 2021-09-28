@@ -69,6 +69,8 @@ export default () => {
     return false;
   };
 
+  const placeRandom = (shipsArray) => {};
+
   return {
     getRows,
     getColumns,
@@ -80,5 +82,6 @@ export default () => {
     getHits,
     getMisses,
     removeShip,
+    placeRandom,
   };
 };

@@ -120,15 +120,11 @@ domPlayer1.addEventListener('drop', (e) => {
   };
 
   const oldShip = boardPlayer1.removeShip(obj.ship);
-  console.log(oldShip);
 
   const isPlaced = boardPlayer1.placeShip(obj);
-  console.log(isPlaced);
-  console.log(boardPlayer1.getShips());
 
   if (isPlaced) e.target.appendChild(document.querySelector(`[data-index="${data}"]`));
   if (!isPlaced) boardPlayer1.placeShip(oldShip);
-  console.log(boardPlayer1.getShips());
 });
 
 const shipsDiv = document.querySelectorAll('[data-index]');

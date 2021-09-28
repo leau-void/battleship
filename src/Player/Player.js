@@ -26,5 +26,7 @@ export default ({ name, starts, isHuman, self, enemy }) => {
     if (this.isTurn && !isHuman) attack();
   };
 
-  return { getName, isTurn, switchTurn, getSelf, getEnemy, attack };
+  const outputObj = { getName, isTurn, switchTurn, getSelf, getEnemy, attack };
+
+  return outputObj;
 };
