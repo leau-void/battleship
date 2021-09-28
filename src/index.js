@@ -41,6 +41,13 @@ const refObj = {
 
 const displayController = DisplayController(refObj);
 
+displayController.updateDisplay();
+
+const shipsPlayer1 = {
+  shipsArray: wrapCreateShips().map((ship, index) => ({ ship, pos: [`p${index}`] })),
+  cacheDOM: document.querySelector('.ship-port'),
+};
+
 const handleAttack = (e) => {
   const target = e.target.closest('[data-coords]');
   if (player.isTurn && target) player.attack(target.dataset.coords);
@@ -62,7 +69,16 @@ const handleEnd = (winner) => {
 const dragstartHandler = (e) => {
   e.target.style.top = `unset`;
   e.target.style.left = `unset`;
-  e.dataTransfer.setData('text/plain', `${e.target.dataset.index}`);
+  const {
+    target: {
+      dataset: { index },
+    },
+  } = e;
+  const horizClass = [...e.target.classList].find((className) => className.includes('horizontal'));
+  const isHoriz = horizClass.split('_')[2];
+  shipsPlayer1.shipsArray[index].ship.isHorizontal = isHoriz === 'true';
+
+  e.dataTransfer.setData('text/plain', `${index}`);
 };
 
 const parseSize = (string) => Math.round(Number(string.replace(/[px]/g, '')));
@@ -85,11 +101,6 @@ const mouseUpHandler = (e) => {
   e.target.style.left = `unset`;
 };
 
-const shipsPlayer1 = {
-  shipsArray: wrapCreateShips().map((ship, index) => ({ ship, pos: [`p${index}`] })),
-  cacheDOM: document.querySelector('.ship-port'),
-};
-
 displayController.displayShips(shipsPlayer1);
 domPlayer1.addEventListener('dragover', (e) => {
   e.preventDefault();
@@ -97,6 +108,8 @@ domPlayer1.addEventListener('dragover', (e) => {
 });
 domPlayer1.addEventListener('drop', (e) => {
   e.preventDefault();
+  if (!e.target.classList.contains('board__cell')) return;
+
   const data = e.dataTransfer.getData('text/plain');
   const pos = e.target.dataset.coords;
 
@@ -106,8 +119,16 @@ domPlayer1.addEventListener('drop', (e) => {
     column: pos.charAt(0),
   };
 
+  const oldShip = boardPlayer1.removeShip(obj.ship);
+  console.log(oldShip);
+
   const isPlaced = boardPlayer1.placeShip(obj);
   console.log(isPlaced);
+  console.log(boardPlayer1.getShips());
+
+  if (isPlaced) e.target.appendChild(document.querySelector(`[data-index="${data}"]`));
+  if (!isPlaced) boardPlayer1.placeShip(oldShip);
+  console.log(boardPlayer1.getShips());
 });
 
 const shipsDiv = document.querySelectorAll('[data-index]');
@@ -119,11 +140,17 @@ shipsDiv.forEach((div) => {
 
 document.querySelector('.ship-port__rotate').addEventListener('click', (e) => {
   e.target.parentElement.classList.toggle('ship-port_rotated');
-  shipsDiv.forEach((div) => div.classList.toggle('ship_is-horizontal_false'));
-  shipsDiv.forEach((div) => div.classList.toggle('ship_is-horizontal_true'));
+  const shipsInPort = document.querySelectorAll('.ship-port__anchor .ship');
+  shipsInPort.forEach((div) => div.classList.toggle('ship_is-horizontal_false'));
+  shipsInPort.forEach((div) => div.classList.toggle('ship_is-horizontal_true'));
 });
 
-displayController.updateDisplay();
+document.querySelector('.ship-port__done').addEventListener('click', (e) => {
+  if (document.querySelectorAll('.ship-port__anchor .ship').length) return;
+  document.querySelector('.ship-port').style.display = 'none';
+  displayController.updateDisplay();
+  domPlayer2.addEventListener('click', (e) => handleAttack(e));
+});
 
 document.addEventListener('receivedAttack', () => {
   displayController.updateDisplay();
@@ -134,5 +161,3 @@ document.addEventListener('receivedAttack', () => {
     cpu.switchTurn();
   } else handleEnd(winner);
 });
-
-domPlayer2.addEventListener('click', (e) => handleAttack(e));

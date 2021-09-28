@@ -14,7 +14,7 @@
   border-bottom: none;
 }
 
-.ship-port__rotate {
+.button {
   width: 50%;
   margin: 0 25%;
   margin-top: -10%;
@@ -22,7 +22,11 @@
   padding: 20px;
 }
 
-.ship-port_rotated .ship-port__rotate {
+.ship-port__done {
+  margin-top: 0;
+}
+
+.ship-port_rotated .button {
   width: fit-content;
   height: 50%;
   margin: 25% 0;

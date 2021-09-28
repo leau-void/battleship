@@ -63,6 +63,12 @@ export default () => {
 
   const isAllSunk = () => ships.every((shipObj) => shipObj.ship.isSunk());
 
+  const removeShip = (ship) => {
+    const index = ships.findIndex((shipObj) => shipObj.ship === ship);
+    if (index > -1) return ships.splice(index, 1)[0];
+    return false;
+  };
+
   return {
     getRows,
     getColumns,
@@ -73,5 +79,6 @@ export default () => {
     isAllSunk,
     getHits,
     getMisses,
+    removeShip,
   };
 };
