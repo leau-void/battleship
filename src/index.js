@@ -55,12 +55,34 @@ const checkEnd = ({ player1, player2 }) => {
 };
 
 const handleEnd = (winner) => {
-  console.log(winner);
+  console.log(winner.player.getName());
   winner.player.switchTurn();
 };
 
 const dragstartHandler = (e) => {
-  e.dataTransfer.setData('text/plain', e.target.dataset.index);
+  e.target.style.top = `unset`;
+  e.target.style.left = `unset`;
+  e.dataTransfer.setData('text/plain', `${e.target.dataset.index}`);
+};
+
+const parseSize = (string) => Math.round(Number(string.replace(/[px]/g, '')));
+
+const mouseDownHandler = (e) => {
+  const targetStyles = window.getComputedStyle(e.target);
+  const width = parseSize(targetStyles.getPropertyValue('width'));
+  const height = parseSize(targetStyles.getPropertyValue('height'));
+  const smallest = width < height ? width : height;
+
+  const offsetX = (e.offsetX || e.layerX) - smallest / 2;
+  const offsetY = (e.offsetY || e.layerY) - smallest / 2;
+
+  e.target.style.top = `${offsetY}px`;
+  e.target.style.left = `${offsetX}px`;
+};
+
+const mouseUpHandler = (e) => {
+  e.target.style.top = `unset`;
+  e.target.style.left = `unset`;
 };
 
 const shipsPlayer1 = {
@@ -76,21 +98,30 @@ domPlayer1.addEventListener('dragover', (e) => {
 domPlayer1.addEventListener('drop', (e) => {
   e.preventDefault();
   const data = e.dataTransfer.getData('text/plain');
-  console.log(e.target);
+  const pos = e.target.dataset.coords;
+
+  const obj = {
+    ship: shipsPlayer1.shipsArray[Number(data)].ship,
+    row: Number(pos.slice(1)),
+    column: pos.charAt(0),
+  };
+
+  const isPlaced = boardPlayer1.placeShip(obj);
+  console.log(isPlaced);
 });
 
 const shipsDiv = document.querySelectorAll('[data-index]');
 shipsDiv.forEach((div) => {
   div.addEventListener('dragstart', dragstartHandler);
+  div.addEventListener('mousedown', mouseDownHandler);
+  div.addEventListener('mouseup', mouseUpHandler);
 });
 
-player.attack('a1');
-player.attack('b3');
-player.attack('d6');
-
-player.attack('a9');
-player.attack('b8');
-player.attack('d2');
+document.querySelector('.ship-port__rotate').addEventListener('click', (e) => {
+  e.target.parentElement.classList.toggle('ship-port_rotated');
+  shipsDiv.forEach((div) => div.classList.toggle('ship_is-horizontal_false'));
+  shipsDiv.forEach((div) => div.classList.toggle('ship_is-horizontal_true'));
+});
 
 displayController.updateDisplay();
 

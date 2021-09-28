@@ -9,18 +9,6 @@
   opacity: 0.5;
 }
 
-.ship-port .ship::before {
-  min-width: 3.7vw;
-  min-height: 3.7vw;
-  max-width: 3.7vw;
-  max-height: 3.7vw;
-  font-size: 3.7vw;
-  text-align: center;
-  content: '✥';
-  display: block;
-  background: rgba(255, 255, 255, 0.4);
-}
-
 .board_player2 .ship {
   display: none;
 }
@@ -36,11 +24,13 @@
 .ship_is-horizontal_true {
   background: rebeccapurple;
   width: var(--length);
+  height: 100%;
 }
 
 .ship_is-horizontal_false {
   background: blueviolet;
   height: var(--length);
+  width: 100%;
   /*
   transform: translateY(-100%) rotate(90deg);
   transform-origin: bottom left;

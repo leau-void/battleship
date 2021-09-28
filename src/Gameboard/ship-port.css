@@ -5,10 +5,29 @@
   display: flex;
   justify-content: space-evenly;
   padding-top: 4vh;
+  flex-wrap: wrap;
 }
 
 .ship-port__anchor {
   width: 3.7vw;
   height: 3.7vw;
   border-bottom: none;
+}
+
+.ship-port__rotate {
+  width: 50%;
+  margin: 0 25%;
+  margin-top: -10%;
+  align-self: center;
+  padding: 20px;
+}
+
+.ship-port_rotated .ship-port__rotate {
+  width: fit-content;
+  height: 50%;
+  margin: 25% 0;
+}
+
+.ship-port_rotated {
+  flex-direction: column;
 }

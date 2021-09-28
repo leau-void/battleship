@@ -1,12 +1,14 @@
 import Gameboard from './Gameboard';
-import wrapShip from '../Ship/wrapShip';
+import wrapCreateShips from '../Ship/wrapCreateShips';
 /* global test expect jest */
 
 const testBoard = Gameboard();
 
+const shipsArray = wrapCreateShips;
+
 test('no fit column', () => {
   testBoard.placeShip({
-    ship: wrapShip.cruiser({ isHorizontal: true }),
+    ship: shipsArray[0],
     row: 1,
     column: 'i',
   });
@@ -15,7 +17,7 @@ test('no fit column', () => {
 
 test('no fit row', () => {
   testBoard.placeShip({
-    ship: wrapShip.cruiser({ isHorizontal: false }),
+    ship: shipsArray[0],
     row: 9,
     column: 'a',
   });
@@ -23,14 +25,13 @@ test('no fit row', () => {
 });
 
 test('placeShip horiz', () => {
-  const ship = wrapShip.cruiser({ isHorizontal: true });
   testBoard.placeShip({
-    ship,
+    ship: shipsArray[0],
     row: 1,
     column: 'a',
   });
   const desiredObj = {
-    ship,
+    ship: shipsArray[0],
     row: 1,
     column: 'a',
     pos: ['a1', 'b1', 'c1'],
@@ -40,14 +41,13 @@ test('placeShip horiz', () => {
 });
 
 test('placeShip vert', () => {
-  const ship = wrapShip.battleship({ isHorizontal: false });
   testBoard.placeShip({
-    ship,
+    ship: shipsArray[0],
     row: 3,
     column: 'd',
   });
   const desiredObj = {
-    ship,
+    ship: shipsArray[0],
     row: 3,
     column: 'd',
     pos: ['d3', 'd4', 'd5', 'd6'],
@@ -57,9 +57,8 @@ test('placeShip vert', () => {
 });
 
 test('overlap last ship', () => {
-  const ship = wrapShip.battleship({ isHorizontal: false });
   testBoard.placeShip({
-    ship,
+    ship: shipsArray[0],
     row: 3,
     column: 'd',
   });
@@ -68,9 +67,8 @@ test('overlap last ship', () => {
 });
 
 test('smaller overlap', () => {
-  const ship = wrapShip.battleship({ isHorizontal: false });
   testBoard.placeShip({
-    ship,
+    ship: shipsArray[0],
     row: 1,
     column: 'd',
   });
@@ -83,7 +81,7 @@ const mockHit2 = jest.fn();
 
 test('attack hit', () => {
   testBoard.placeShip({
-    ship: wrapShip.destroyer({ isHorizontal: true }),
+    ship: shipsArray[0],
     row: 8,
     column: 'h',
   });

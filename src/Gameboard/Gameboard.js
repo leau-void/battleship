@@ -46,9 +46,10 @@ export default () => {
   const placeShip = function placeShipBoard({ ship, row, column }) {
     const pos = getAbsPositions({ ship, row, column });
     const canPlace = checkPlace({ ship, row, column, pos });
-    if (!canPlace) return;
+    if (!canPlace) return false;
 
     ships.push({ ship, row, column, pos });
+    return true;
   };
 
   const receiveAttack = function receiveAttack(coords) {
