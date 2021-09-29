@@ -20,6 +20,7 @@ export default ({ isHorizontal, name }) => {
     if (sunk && !this.alreadySunk) {
       const e = new CustomEvent('shipSunk', { detail: name });
       document.dispatchEvent(e);
+
       this.alreadySunk = true;
     }
     return sunk;
