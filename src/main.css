@@ -38,3 +38,20 @@
   margin: 0 2vw;
   justify-content: space-evenly;
 }
+
+.github-link {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  height: fit-content;
+  width: fit-content;
+  z-index: 102;
+}
+
+.github-img {
+  content: url('./assets/github-mark.png');
+  height: auto;
+  width: auto;
+  max-width: 40px;
+  max-height: 40px;
+}
