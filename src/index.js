@@ -6,6 +6,7 @@ import './main.css';
 
 const domPlayer1 = document.querySelector('.board_player1');
 const domPlayer2 = document.querySelector('.board_player2');
+const textOutput = document.querySelector('.console__output');
 
 const boardPlayer1 = Gameboard();
 const boardPlayer2 = Gameboard();
@@ -63,8 +64,16 @@ const checkEnd = ({ player1, player2 }) => {
   return false;
 };
 
+const sendTextOutput = (string) => {
+  textOutput.classList.remove('anim-typewriter');
+  window.setTimeout(() => {
+    textOutput.textContent = string;
+    textOutput.classList.add('anim-typewriter');
+  }, 10);
+};
+
 const handleEnd = (winner) => {
-  console.log(winner.player.getName());
+  sendTextOutput(winner.player.getName());
   winner.player.switchTurn();
 };
 

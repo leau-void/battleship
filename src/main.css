@@ -1,4 +1,5 @@
 @import './styles/normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=PT+Mono&display=swap');
 
 .header {
   text-align: center;
@@ -9,4 +10,46 @@
   flex-direction: row;
   gap: 5vw;
   padding: 2vw;
+}
+
+.console {
+  height: 15vh;
+  background: #121212;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.console__output {
+  margin-left: 20px;
+  font-family: 'PT Mono', monospace;
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+  font-size: 150%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  transform: translateY(-50%);
+  max-width: fit-content;
+}
+
+/* Animation */
+.anim-typewriter {
+  animation: typewriter 2s steps(50) 0.5s 1 normal both,
+    blinkTextCursor 500ms steps(50) infinite normal;
+}
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgba(255, 255, 255, 0.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
 }
