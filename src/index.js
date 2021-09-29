@@ -4,6 +4,7 @@ import Player from './Player/Player';
 import DisplayController from './DisplayController/DisplayController';
 import './main.css';
 
+// setup
 const domPlayer1 = document.querySelector('.board_player1');
 const domPlayer2 = document.querySelector('.board_player2');
 
@@ -52,6 +53,9 @@ const shipsPlayer1 = {
   cacheDOM: document.querySelector('.ship-port'),
 };
 
+displayController.displayShips(shipsPlayer1);
+
+// functions
 const sendTextOutput = (string1, string2) => {
   textOutput1.classList.remove('anim-typewriter');
   window.setTimeout(() => {
@@ -131,6 +135,7 @@ const start = () => {
   sendTextOutput('You can attack the Enemy Fleet by clicking on a cell.', 'Good luck!');
 };
 
+// eventListeners
 document.querySelector('.modal__button').addEventListener('click', (e) => {
   const modal = document.querySelector('.modal');
   e.preventDefault();
@@ -145,7 +150,6 @@ document.querySelector('.modal__button').addEventListener('click', (e) => {
   }, 500);
 });
 
-displayController.displayShips(shipsPlayer1);
 domPlayer1.addEventListener('dragover', (e) => {
   e.preventDefault();
   e.dataTransfer.dropEffect = 'move';

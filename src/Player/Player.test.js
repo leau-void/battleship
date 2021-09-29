@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Player from './Player';
 import Gameboard from '../Gameboard/Gameboard';
 /* global test expect jest */
@@ -22,14 +26,14 @@ const playerTest2 = Player({
 
 test('player1 props', () => {
   expect(playerTest1.getName()).toBe('Human');
-  expect(playerTest1.doesStart()).toBe(true);
   expect(playerTest1.isTurn).toBe(true);
+  expect(playerTest1.getSelf()).toBe(testBoard1);
 });
 
 test('player2 props', () => {
   expect(playerTest2.getName()).toBe('The Computer');
-  expect(playerTest2.doesStart()).toBe(false);
   expect(playerTest2.isTurn).toBe(false);
+  expect(playerTest2.getEnemy()).toBe(testBoard1);
 });
 
 test('turn', () => {

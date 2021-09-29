@@ -1,14 +1,19 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Gameboard from './Gameboard';
 import wrapCreateShips from '../Ship/wrapCreateShips';
 /* global test expect jest */
 
 const testBoard = Gameboard();
 
-const shipsArray = wrapCreateShips;
+const shipsArray = wrapCreateShips();
 
 test('no fit column', () => {
+  const ship = { ...shipsArray[0], isHorizontal: true };
   testBoard.placeShip({
-    ship: shipsArray[0],
+    ship,
     row: 1,
     column: 'i',
   });
@@ -25,13 +30,15 @@ test('no fit row', () => {
 });
 
 test('placeShip horiz', () => {
+  const ship = { ...shipsArray[3], isHorizontal: true };
+
   testBoard.placeShip({
-    ship: shipsArray[0],
+    ship,
     row: 1,
     column: 'a',
   });
   const desiredObj = {
-    ship: shipsArray[0],
+    ship,
     row: 1,
     column: 'a',
     pos: ['a1', 'b1', 'c1'],
@@ -42,12 +49,12 @@ test('placeShip horiz', () => {
 
 test('placeShip vert', () => {
   testBoard.placeShip({
-    ship: shipsArray[0],
+    ship: shipsArray[1],
     row: 3,
     column: 'd',
   });
   const desiredObj = {
-    ship: shipsArray[0],
+    ship: shipsArray[1],
     row: 3,
     column: 'd',
     pos: ['d3', 'd4', 'd5', 'd6'],
@@ -80,8 +87,10 @@ const mockHit = jest.fn();
 const mockHit2 = jest.fn();
 
 test('attack hit', () => {
+  const ship = { ...shipsArray[4], isHorizontal: true };
+
   testBoard.placeShip({
-    ship: shipsArray[0],
+    ship,
     row: 8,
     column: 'h',
   });
