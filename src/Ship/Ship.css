@@ -11,6 +11,10 @@
   border-radius: 5px;
 }
 
+.board .ship {
+  border-radius: 0;
+}
+
 .board_player2 .ship {
   display: none;
 }

@@ -1,4 +1,6 @@
 export default ({ isHorizontal, name }) => {
+  const alreadySunk = false;
+
   const lengthTable = {
     Carrier: 5,
     Battleship: 4,
@@ -14,7 +16,13 @@ export default ({ isHorizontal, name }) => {
     hits.push(pos);
   };
   const isSunk = function checkIfSunk() {
-    return hits.length === this.length;
+    const sunk = hits.length === this.length;
+    if (sunk && !this.alreadySunk) {
+      const e = new CustomEvent('shipSunk', { detail: name });
+      document.dispatchEvent(e);
+      this.alreadySunk = true;
+    }
+    return sunk;
   };
 
   return { length, isHorizontal, name, isSunk, hit };

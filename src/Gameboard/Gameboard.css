@@ -68,5 +68,5 @@
 }
 
 .board_miss::after {
-  background: blue;
+  background: rgb(0, 0, 94);
 }

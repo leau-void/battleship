@@ -1,0 +1,50 @@
+.background-console {
+  height: 100vh;
+  background: #121212;
+}
+
+.console {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 15vmin;
+  background: #121212;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.console__output {
+  margin-left: 5vw;
+  font-family: 'PT Mono', monospace;
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+  font-size: min(150%, 2.5vw);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  transform: translateY(-50%);
+  max-width: fit-content;
+  margin-top: 3vh;
+}
+
+/* Animation */
+.anim-typewriter {
+  animation: typewriter 2.5s steps(44) 0s 1 normal both,
+    blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgba(255, 255, 255, 0.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}

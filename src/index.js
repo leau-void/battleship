@@ -6,7 +6,9 @@ import './main.css';
 
 const domPlayer1 = document.querySelector('.board_player1');
 const domPlayer2 = document.querySelector('.board_player2');
-const textOutput = document.querySelector('.console__output');
+
+const textOutput1 = document.querySelector('.console__line-1');
+const textOutput2 = document.querySelector('.console__line-2');
 
 const boardPlayer1 = Gameboard();
 const boardPlayer2 = Gameboard();
@@ -40,23 +42,29 @@ const refObj = {
   },
 };
 
-document.querySelector('.modal__button').addEventListener('click', (e) => {
-  const modal = document.querySelector('.modal');
-  e.preventDefault();
-  player.setName(document.querySelector('.modal__input').value || 'Player One');
-  modal.classList.add('modal_transparent');
-  window.setTimeout(() => modal.classList.add('modal_hidden'), 500);
-});
-
 const displayController = DisplayController(refObj);
 
-displayController.updateDisplay();
 boardPlayer2.placeRandom(wrapCreateShips());
 displayController.updateDisplay();
 
 const shipsPlayer1 = {
   shipsArray: wrapCreateShips().map((ship, index) => ({ ship, pos: [`p${index}`] })),
   cacheDOM: document.querySelector('.ship-port'),
+};
+
+const sendTextOutput = (string1, string2) => {
+  textOutput1.classList.remove('anim-typewriter');
+  window.setTimeout(() => {
+    textOutput1.textContent = string1;
+    textOutput2.textContent = '';
+    textOutput1.classList.add('anim-typewriter');
+  }, 10);
+
+  textOutput2.classList.remove('anim-typewriter');
+  window.setTimeout(() => {
+    textOutput2.textContent = string2;
+    textOutput2.classList.add('anim-typewriter');
+  }, 1500);
 };
 
 const handleAttack = (e) => {
@@ -70,14 +78,6 @@ const checkEnd = ({ player1, player2 }) => {
 
   if (loser) return players.find((curr) => curr !== loser);
   return false;
-};
-
-const sendTextOutput = (string) => {
-  textOutput.classList.remove('anim-typewriter');
-  window.setTimeout(() => {
-    textOutput.textContent = string;
-    textOutput.classList.add('anim-typewriter');
-  }, 10);
 };
 
 const handleEnd = (winner) => {
@@ -128,7 +128,22 @@ const start = () => {
   window.setTimeout(() => domPlayer2.classList.remove('board_size_s'), 0);
   displayController.updateDisplay();
   domPlayer2.addEventListener('click', (e) => handleAttack(e));
+  sendTextOutput('You can attack the Enemy Fleet by clicking on a cell.', 'Good luck!');
 };
+
+document.querySelector('.modal__button').addEventListener('click', (e) => {
+  const modal = document.querySelector('.modal');
+  e.preventDefault();
+  player.setName(document.querySelector('.modal__input').value || 'Player One');
+  modal.classList.add('modal_transparent');
+  window.setTimeout(() => {
+    modal.classList.add('modal_hidden');
+    sendTextOutput(
+      `Welcome ${player.getName()}, please place your Fleet.`,
+      'You can Drag and Drop or generate a random placement.'
+    );
+  }, 500);
+});
 
 displayController.displayShips(shipsPlayer1);
 domPlayer1.addEventListener('dragover', (e) => {
@@ -189,4 +204,14 @@ document.addEventListener('receivedAttack', () => {
     player.switchTurn();
     cpu.switchTurn();
   } else handleEnd(winner);
+});
+
+document.addEventListener('shipSunk', (e) => {
+  const who = player.isTurn ? player : cpu;
+  const other = who === player ? cpu : player;
+  const string =
+    who === player
+      ? `You have sunk ${other.getName()}'s ${e.detail}!`
+      : `${other.getName()} has sunk your ${e.detail}!`;
+  sendTextOutput(string);
 });
