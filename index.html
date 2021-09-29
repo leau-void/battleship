@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leau's Battleship</title>
+  <script defer src="index.bundle.js"></script></head>
+  <body class="body">
+    <a class="github-link" href="https://github.com/leau-void/battleship">
+      <img class="github-img" alt="My GitHub" />
+    </a>
+    <header class="header">
+      <h1 class="h1">BATTLESHIP</h1>
+    </header>
+    <main class="main">
+      <div class="modal">
+        <form class="modal__form">
+          <label> Enter Player Name : </label>
+          <input class="modal__input" type="text" />
+          <button class="button modal__button">Start Game</button>
+        </form>
+        <div class="modal__background"></div>
+      </div>
+      <label class="label label_player1">
+        Player One
+        <div class="board board_player1"></div>
+      </label>
+      <label class="label label_player2 label_hidden">
+        Player Two
+        <div class="board board_player2 board_size_s board_hidden"></div>
+      </label>
+      <div class="setup">
+        <button class="button setup__start">Start Game</button>
+        <button class="button setup__random">Randomize Ship Placement</button>
+        <button class="button setup__rotate">Rotate Ships</button>
+
+        <div class="ship-port">
+          <div class="ship-port__anchor" data-coords="p0"></div>
+          <div class="ship-port__anchor" data-coords="p1"></div>
+          <div class="ship-port__anchor" data-coords="p2"></div>
+          <div class="ship-port__anchor" data-coords="p3"></div>
+          <div class="ship-port__anchor" data-coords="p4"></div>
+        </div>
+      </div>
+    </main>
+    <div class="background-console">
+      <div class="console">
+        <div class="console__output anim-typewriter console__line-1"></div>
+        <div class="console__output anim-typewriter console__line-2"></div>
+      </div>
+    </div>
+  </body>
+</html>
