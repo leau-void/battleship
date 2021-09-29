@@ -7,24 +7,31 @@
     <title>Leau's Battleship</title>
   </head>
   <body>
+    <header class="header">
+      <h1>BATTLESHIP</h1>
+    </header>
     <main class="main">
-      <label>
+      <label class="label label_player1">
         Player 1
         <div class="board board_player1"></div>
       </label>
-      <label>
+      <label class="label label_player2 label_hidden">
         Player 2
-        <div class="board board_player2"></div>
+        <div class="board board_player2 board_size_s board_hidden"></div>
       </label>
+      <div class="setup">
+        <button class="button setup__start">Start Game</button>
+        <button class="button setup__random">Randomize Ship Placement</button>
+        <button class="button setup__rotate">Rotate Ships</button>
+
+        <div class="ship-port">
+          <div class="ship-port__anchor" data-coords="p0"></div>
+          <div class="ship-port__anchor" data-coords="p1"></div>
+          <div class="ship-port__anchor" data-coords="p2"></div>
+          <div class="ship-port__anchor" data-coords="p3"></div>
+          <div class="ship-port__anchor" data-coords="p4"></div>
+        </div>
+      </div>
     </main>
-    <div class="ship-port">
-      <button class="button ship-port__rotate">Rotate Ships</button>
-      <div class="ship-port__anchor" data-coords="p0"></div>
-      <div class="ship-port__anchor" data-coords="p1"></div>
-      <div class="ship-port__anchor" data-coords="p2"></div>
-      <div class="ship-port__anchor" data-coords="p3"></div>
-      <div class="ship-port__anchor" data-coords="p4"></div>
-      <button class="button ship-port__done">Start Game</button>
-    </div>
   </body>
 </html>

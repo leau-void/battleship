@@ -42,6 +42,8 @@ const refObj = {
 const displayController = DisplayController(refObj);
 
 displayController.updateDisplay();
+boardPlayer2.placeRandom(wrapCreateShips());
+displayController.updateDisplay();
 
 const shipsPlayer1 = {
   shipsArray: wrapCreateShips().map((ship, index) => ({ ship, pos: [`p${index}`] })),
@@ -101,6 +103,16 @@ const mouseUpHandler = (e) => {
   e.target.style.left = `unset`;
 };
 
+const start = () => {
+  if (document.querySelectorAll('.ship-port__anchor .ship').length) return;
+  document.querySelector('.setup').style.display = 'none';
+  domPlayer1.classList.add('board_size_s');
+  document.querySelector('.label_player2').classList.remove('label_hidden');
+  window.setTimeout(() => domPlayer2.classList.remove('board_size_s'), 0);
+  displayController.updateDisplay();
+  domPlayer2.addEventListener('click', (e) => handleAttack(e));
+};
+
 displayController.displayShips(shipsPlayer1);
 domPlayer1.addEventListener('dragover', (e) => {
   e.preventDefault();
@@ -134,19 +146,23 @@ shipsDiv.forEach((div) => {
   div.addEventListener('mouseup', mouseUpHandler);
 });
 
-document.querySelector('.ship-port__rotate').addEventListener('click', (e) => {
-  e.target.parentElement.classList.toggle('ship-port_rotated');
+document.querySelector('.setup__rotate').addEventListener('click', (e) => {
+  document.querySelector('.ship-port').classList.toggle('ship-port_rotated');
   const shipsInPort = document.querySelectorAll('.ship-port__anchor .ship');
   shipsInPort.forEach((div) => div.classList.toggle('ship_is-horizontal_false'));
   shipsInPort.forEach((div) => div.classList.toggle('ship_is-horizontal_true'));
 });
 
-document.querySelector('.ship-port__done').addEventListener('click', (e) => {
-  if (document.querySelectorAll('.ship-port__anchor .ship').length) return;
-  document.querySelector('.ship-port').style.display = 'none';
+document.querySelector('.setup__random').addEventListener('click', () => {
+  const shipsPlaced = boardPlayer1.getShips().map((shipObj) => shipObj.ship.name);
+  const notPlacedShips = wrapCreateShips().filter((ship) => !shipsPlaced.includes(ship.name));
+  boardPlayer1.placeRandom(notPlacedShips);
   displayController.updateDisplay();
-  domPlayer2.addEventListener('click', (e) => handleAttack(e));
+  document.querySelector('.ship-port').replaceChildren();
+  start();
 });
+
+document.querySelector('.setup__start').addEventListener('click', start);
 
 document.addEventListener('receivedAttack', () => {
   displayController.updateDisplay();

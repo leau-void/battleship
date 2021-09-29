@@ -1,5 +1,9 @@
 @import './styles/normalize.css';
 
+.header {
+  text-align: center;
+}
+
 .main {
   display: flex;
   flex-direction: row;

@@ -1,5 +1,5 @@
 import './Gameboard.css';
-import './ship-port.css';
+import './setup.css';
 
 export default () => {
   const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -69,7 +69,25 @@ export default () => {
     return false;
   };
 
-  const placeRandom = (shipsArray) => {};
+  const randomize = (ship) => ({
+    ship,
+    row: rows[Math.round(Math.random() * 9)],
+    column: columns[Math.round(Math.random() * 9)],
+  });
+
+  const placeRandom = (shipsArray) => {
+    const newShips = shipsArray.map((ship) => {
+      const newShip = { ...ship };
+      newShip.isHorizontal = Boolean(Math.round(Math.random()));
+      return newShip;
+    });
+    newShips.forEach((ship) => {
+      let shipObj = randomize(ship);
+      while (!placeShip(shipObj)) {
+        shipObj = randomize(ship);
+      }
+    });
+  };
 
   return {
     getRows,

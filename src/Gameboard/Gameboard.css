@@ -1,9 +1,19 @@
+.label_hidden {
+  display: none;
+}
+
 .board {
   width: 40vw;
   height: 40vw;
   border: 2px solid black;
   display: grid;
   grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+  transition: transform 1.2s ease-in-out;
+  transform-origin: bottom left;
+}
+
+.board_size_s {
+  transform: scale(0.85);
 }
 
 .board__cell {
