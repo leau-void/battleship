@@ -6,17 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Leau's Battleship</title>
   </head>
-  <body>
+  <body class="body">
     <header class="header">
-      <h1>BATTLESHIP</h1>
+      <h1 class="h1">BATTLESHIP</h1>
     </header>
     <main class="main">
+      <div class="modal">
+        <form class="modal__form">
+          <label> Enter Player Name : </label>
+          <input class="modal__input" type="text" />
+          <button class="button modal__button">Start Game</button>
+        </form>
+        <div class="modal__background"></div>
+      </div>
       <label class="label label_player1">
-        Player 1
+        Player One
         <div class="board board_player1"></div>
       </label>
       <label class="label label_player2 label_hidden">
-        Player 2
+        Player Two
         <div class="board board_player2 board_size_s board_hidden"></div>
       </label>
       <div class="setup">

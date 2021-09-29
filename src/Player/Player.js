@@ -1,5 +1,8 @@
 export default ({ name, starts, isHuman, self, enemy }) => {
   const getName = () => name;
+  const setName = (string) => {
+    name = string;
+  };
   const getSelf = () => self;
   const getEnemy = () => enemy;
   const isTurn = starts;
@@ -26,7 +29,5 @@ export default ({ name, starts, isHuman, self, enemy }) => {
     if (this.isTurn && !isHuman) attack();
   };
 
-  const outputObj = { getName, isTurn, switchTurn, getSelf, getEnemy, attack };
-
-  return outputObj;
+  return { getName, isTurn, switchTurn, getSelf, getEnemy, attack, setName };
 };

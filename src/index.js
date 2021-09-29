@@ -12,7 +12,7 @@ const boardPlayer1 = Gameboard();
 const boardPlayer2 = Gameboard();
 
 const player = Player({
-  name: 'Human',
+  name: 'The Human',
   isHuman: true,
   starts: true,
   self: boardPlayer1,
@@ -39,6 +39,14 @@ const refObj = {
     cacheDOM: domPlayer2,
   },
 };
+
+document.querySelector('.modal__button').addEventListener('click', (e) => {
+  const modal = document.querySelector('.modal');
+  e.preventDefault();
+  player.setName(document.querySelector('.modal__input').value || 'Player One');
+  modal.classList.add('modal_transparent');
+  window.setTimeout(() => modal.classList.add('modal_hidden'), 500);
+});
 
 const displayController = DisplayController(refObj);
 
@@ -73,7 +81,7 @@ const sendTextOutput = (string) => {
 };
 
 const handleEnd = (winner) => {
-  sendTextOutput(winner.player.getName());
+  sendTextOutput(`${winner.player.getName()} wins!`);
   winner.player.switchTurn();
 };
 

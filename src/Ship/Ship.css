@@ -6,7 +6,9 @@
   position: relative;
   z-index: 99;
   box-sizing: border-box;
-  opacity: 0.5;
+  opacity: 0.8;
+  background: #e26e01;
+  border-radius: 5px;
 }
 
 .board_player2 .ship {
@@ -18,17 +20,15 @@
 }
 
 .ship_sunk {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .ship_is-horizontal_true {
-  background: rebeccapurple;
   width: var(--length);
   height: 100%;
 }
 
 .ship_is-horizontal_false {
-  background: blueviolet;
   height: var(--length);
   width: 100%;
   /*

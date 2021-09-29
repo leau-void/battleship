@@ -1,10 +1,15 @@
+.label {
+  font-size: 2rem;
+}
+
 .label_hidden {
   display: none;
 }
 
 .board {
-  width: 40vw;
-  height: 40vw;
+  margin-top: 1rem;
+  width: 40vmin;
+  height: 40vmin;
   border: 2px solid black;
   display: grid;
   grid-template: repeat(10, 1fr) / repeat(10, 1fr);
@@ -37,8 +42,8 @@
 .board__target {
   width: fit-content;
   height: fit-content;
-  font-size: 3.5vw;
-  margin-top: -0.3vw;
+  font-size: 3.5vmin;
+  margin-top: -0.3vmin;
 
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
