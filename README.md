@@ -16,7 +16,8 @@ The components are tested individually to assure that they are not tightly coupl
 
 - Vanilla JS
 - [Jest](https://jestjs.io/)
-- [HTML5 Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API)
+- [HTML5 Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API) -[DragDropTouch polyfill](https://github.com/Bernardo-Castilho/dragdroptouch)
+- [Event and CustomEvent interface](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent)
 - [Webpack](https://webpack.js.org/)
 - [AirBnb Javascript Style Guide](https://github.com/airbnb/javascript)
 - [Normalize.css](https://necolas.github.io/normalize.css/)
